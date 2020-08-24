@@ -24,6 +24,4 @@ app.post('/getting-email', async (request, response) => {
   return response.status(204).json();
 })
 
-app.listen(3333, () => {
-  console.log('Server started')
-});
+app.listen(process.env.PORT || 3333);
