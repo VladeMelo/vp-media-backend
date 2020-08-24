@@ -14,7 +14,7 @@ class SESMailProvider {
     });
   }
 
-  async sendMail(name, email, emailUser){
+  async sendMailToEnterprise(emailEnterprise, emailUser){
     const mailTemplateProvider = new HandlebarsMailTemplateProvider();
 
     const newUserTemplate = path.resolve(  
@@ -26,15 +26,45 @@ class SESMailProvider {
 
     await this.client.sendMail({  
       from: {
-        name: name,
-        address: email,
+        address: emailEnterprise,
       },
       to: {
-        name: name,
-        address: email,
+        address: emailEnterprise,
       },
-      subject: '[VQ]: Novo usuário',  
+      subject: '[VP]: Novo usuário',  
       html: await mailTemplateProvider.parse(newUserTemplate, { email: emailUser })
+    }); 
+  }
+
+  async sendMailToUser(emailEnterprise, emailUser, date, hour, minute){
+    const mailTemplateProvider = new HandlebarsMailTemplateProvider();
+
+    const scheduleConfirmedTemplate = path.resolve(  
+      __dirname,  
+      '..',
+      'views',  
+      'schedule_confirmed.hbs',  
+    );
+
+    const formattedHour = hour >= 10 ? hour : `0${hour}`
+    const formattedMinte = minute === 30 ? 30 : '00'
+    const formattedDate = new Date(date)
+
+    await this.client.sendMail({  
+      from: {
+        address: emailEnterprise,
+      },
+      to: {
+        address: emailUser,
+      },
+      subject: '[VP]: Ligação confirmada',  
+      html: await mailTemplateProvider.parse(scheduleConfirmedTemplate, {
+        day: formattedDate.getDate(),
+        month: formattedDate.getMonth(),
+        year: formattedDate.getFullYear(),
+        hour: formattedHour,
+        minute: formattedMinte 
+      })
     }); 
   }
 }
