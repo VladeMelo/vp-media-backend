@@ -8,7 +8,7 @@ const SESMailProvider = require('./providers/SESMailProvider');
 const app = express();
 
 app.use(cors({
-  origin: 'https://vp-media.netlify.app/'
+  origin: 'https://vp-media.netlify.app',
 }));
 app.use(express.json());
 
