@@ -59,7 +59,7 @@ class SESMailProvider {
       },
       subject: '[VP]: Ligação confirmada',  
       html: await mailTemplateProvider.parse(scheduleConfirmedTemplate, {
-        day: formattedDate.getDate(),
+        day: formattedDate.getDate() - 1,
         month: formattedDate.getMonth(),
         year: formattedDate.getFullYear(),
         hour: formattedHour,
