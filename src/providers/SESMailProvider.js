@@ -47,7 +47,7 @@ class SESMailProvider {
     );
 
     const formattedHour = hour >= 10 ? hour : `0${hour}`
-    const formattedMinte = minute === 30 ? 30 : '00'
+    const formattedMinute = minute === 30 ? 30 : '00'
     const formattedDate = new Date(date)
 
     await this.client.sendMail({  
@@ -63,7 +63,7 @@ class SESMailProvider {
         month: formattedDate.getMonth(),
         year: formattedDate.getFullYear(),
         hour: formattedHour,
-        minute: formattedMinte 
+        minute: formattedMinute 
       })
     }); 
   }
