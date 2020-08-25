@@ -7,13 +7,8 @@ const SESMailProvider = require('./providers/SESMailProvider');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
-app.use((request, response, next) => {
-  response.header('Access-Control-Allow-Origin', 'https://vp-media.netlify.app');
-  app.use(cors());
-
-  next();
-});
 
 app.post('/getting-email', async (request, response) => {
   const { hour, minute, date } = request.body;
