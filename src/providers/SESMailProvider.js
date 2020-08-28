@@ -14,7 +14,7 @@ class SESMailProvider {
     });
   }
 
-  async sendMailToEnterprise(emailEnterprise, emailUser){
+  async sendMailToEnterprise(emailEnterprise, emailUser, name){
     const mailTemplateProvider = new HandlebarsMailTemplateProvider();
 
     const newUserTemplate = path.resolve(  
@@ -32,11 +32,14 @@ class SESMailProvider {
         address: emailEnterprise,
       },
       subject: '[VP]: Novo usuário',  
-      html: await mailTemplateProvider.parse(newUserTemplate, { email: emailUser })
+      html: await mailTemplateProvider.parse(newUserTemplate, { 
+        email: emailUser,
+        name
+      })
     }); 
   }
 
-  async sendMailToUser(emailEnterprise, emailUser, date, hour, minute){
+  async sendMailToUser(emailEnterprise, emailUser, date, hour, minute, name){
     const mailTemplateProvider = new HandlebarsMailTemplateProvider();
 
     const scheduleConfirmedTemplate = path.resolve(  
@@ -63,7 +66,8 @@ class SESMailProvider {
         month: formattedDate.getMonth() + 1,
         year: formattedDate.getFullYear(),
         hour: formattedHour,
-        minute: formattedMinute 
+        minute: formattedMinute,
+        name
       })
     }); 
   }

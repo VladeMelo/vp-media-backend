@@ -11,15 +11,15 @@ app.use(express.json());
 app.use(cors());
 
 app.post('/getting-email', async (request, response) => {
-  const { hour, minute, date } = request.body;
+  const { hour, minute, date, name } = request.body;
   const emailUser = request.body.email;
 
   const mailProvider = new SESMailProvider();
   
   const emailEnterprise = 'Vitor@vp-media.com.br';
 
-  await mailProvider.sendMailToEnterprise(emailEnterprise, emailUser)
-  await mailProvider.sendMailToUser(emailEnterprise, emailUser, date, hour, minute)
+  await mailProvider.sendMailToEnterprise(emailEnterprise, emailUser, name)
+  await mailProvider.sendMailToUser(emailEnterprise, emailUser, date, hour, minute, name)
 
   return response.status(204).json();
 })
